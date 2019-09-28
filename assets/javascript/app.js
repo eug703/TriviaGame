@@ -34,15 +34,15 @@ function countDown(){
 function loadQuestion() {
     counter = 30;
     timer = setInterval(countDown, 1000);
-
+    
     const question = quizQuestions[currentQuestion].question;
     const choices = quizQuestions[currentQuestion].choices;
-
 
     $("#time").html("Timer: " + counter);
     $("#game").html(` 
         <h3>${question}</h3>
         ${loadChoices(choices)}
+        ${loadRemainingQuestions()}
     `);
     // $("#game").html("<h3>" + question + "</h3>");
 }
@@ -83,9 +83,28 @@ function displayResult(){
      <p>You got ${score} questons right</p>
      <p>You missed ${loss} questons</p>
      <p>Questions answered:  ${quizQuestions.length}</p>
-     <button class="btn bnt-primary" id="reset">Reset Game</button>
+     <button class="btn btn-primary" id="reset">Reset Game</button>
      `;
      $("#game").html(result);
+}
+
+$(document).on("click", "#reset", function(){
+     counter = 30;
+    currentQuestion = 0;
+    score = 0;
+    loss = 0;
+    timer = null;
+
+    loadQuestion();
+    // console.log("reset button test");
+
+});
+
+function loadRemainingQuestions(){
+    const remainingQuestions=quizQuestions.length - (currentQuestion+1);
+    const totalQuestions = quizQuestions.length;
+
+    return `Remaining Questions: ${remainingQuestions}/${totalQuestions}`;
 }
 
 loadQuestion();
