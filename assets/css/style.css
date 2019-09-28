@@ -1,3 +1,11 @@
 body {
     background-color: lavender;
 }
+
+.choice{
+    border: 3px solid lightcoral;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 10px 10px;
+}
