@@ -1,4 +1,4 @@
-let counter = 5;
+let counter = 30;
 let currentQuestion = 0;
 let score = 0;
 let loss = 0;
@@ -8,6 +8,7 @@ function nextQuestion(){
     const outOfQuestions = (quizQuestions.length - 1) === currentQuestion;
     if(outOfQuestions){
         console.log("game over");
+        displayResult();
     }
     else{
         currentQuestion++;
@@ -24,7 +25,6 @@ function timeUp(){
 function countDown(){
     counter--;
     $("#time").html("Timer: " + counter);
-
     if(counter === 0){
         timeUp();
     }
@@ -32,7 +32,7 @@ function countDown(){
 
 
 function loadQuestion() {
-    counter = 5;
+    counter = 30;
     timer = setInterval(countDown, 1000);
 
     const question = quizQuestions[currentQuestion].question;
@@ -54,7 +54,38 @@ function loadChoices(choices){
         result += `<p class = "choice" data-answer="${choices[i]}"> ${choices[i]} </p>`;
     }
     return result;
+}
 
+
+
+
+$(document).on("click", ".choice", function(){
+    clearInterval(timer);
+    const selectedAnswer = $(this).attr("data-answer");
+    const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+
+    if(correctAnswer === selectedAnswer){
+        score++;
+        nextQuestion();
+        console.log("win");
+    }
+
+    else{
+        loss++;
+        nextQuestion();
+        console.log("lose");
+    }
+    console.log ("button test works", selectedAnswer);
+});
+
+function displayResult(){
+     const result= `
+     <p>You got ${score} questons right</p>
+     <p>You missed ${loss} questons</p>
+     <p>Questions answered:  ${quizQuestions.length}</p>
+     <button class="btn bnt-primary" id="reset">Reset Game</button>
+     `;
+     $("#game").html(result);
 }
 
 loadQuestion();
