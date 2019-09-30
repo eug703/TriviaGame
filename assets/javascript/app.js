@@ -80,8 +80,8 @@ $(document).on("click", ".choice", function(){
 
 function displayResult(){
      const result= `
-     <p>You got ${score} questons right</p>
-     <p>You missed ${loss} questons</p>
+     <p>You got ${score} question(s) right</p>
+     <p>You missed ${loss} question(s)</p>
      <p>Questions answered:  ${quizQuestions.length}</p>
      <button class="btn btn-primary" id="reset">Reset Game</button>
      `;
